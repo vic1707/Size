@@ -111,6 +111,26 @@ GTEST_TEST(constructors, static_yottabytes_constructor) {
   EXPECT_EQ(YB.bytes(), 1000000000000000000000000_128) << "Size constructors from_yottabytes should initialize to a number of yottabytes";
 };
 
+GTEST_TEST(constructors, static_robibyte_constructor) {
+  auto RiB = size::from_robibytes(1);
+  EXPECT_EQ(RiB.bytes(), 1237940039285380274899124224_128) << "Size constructors from_robibytes should initialize to a number of robibytes";
+};
+
+GTEST_TEST(constructors, static_ronnabyte_constructor) {
+  auto RN = size::from_ronnabytes(1);
+  EXPECT_EQ(RN.bytes(), 1000000000000000000000000000_128) << "Size constructors from_ronnabytes should initialize to a number of ronnabytes";
+};
+
+GTEST_TEST(constructors, static_quebibyte_constructor) {
+  auto QiB = size::from_quebibytes(1);
+  EXPECT_EQ(QiB.bytes(), 1267650600228229401496703205376_128) << "Size constructors from_quebibytes should initialize to a number of quebibytes";
+};
+
+GTEST_TEST(constructors, static_quettabyte_constructor) {
+  auto QT = size::from_quettabytes(1);
+  EXPECT_EQ(QT.bytes(), 1000000000000000000000000000000_128) << "Size constructors from_quettabytes should initialize to a number of quettabytes";
+};
+
 GTEST_TEST(constructors, copy_constructor) {
   size::Size s(1, size::Unit::KILOBYTE);
   size::Size s2(s);
@@ -194,6 +214,22 @@ GTEST_TEST(size_literals, yottabytes) {
   EXPECT_EQ(1_YB, 1000000000000000000000000_128) << "Size literal _YB should work";
 };
 
+GTEST_TEST(size_literals, robibytes) {
+  EXPECT_EQ(1_RiB, 1237940039285380274899124224_128) << "Size literal _RiB should work";
+};
+
+GTEST_TEST(size_literals, ronabytes) {
+  EXPECT_EQ(1_RB, 1000000000000000000000000000_128) << "Size literal _RB should work";
+};
+
+GTEST_TEST(size_literals, quibibytes) {
+  EXPECT_EQ(1_QiB, 1267650600228229401496703205376_128) << "Size literal _QiB should work";
+};
+
+GTEST_TEST(size_literals, quattabytes) {
+  EXPECT_EQ(1_QB, 1000000000000000000000000000000_128) << "Size literal _QB should work";
+};
+
 #pragma endregion
 
 #pragma region Size conversion
@@ -273,13 +309,33 @@ GTEST_TEST(conversion, zebibytes) {
 };
 
 GTEST_TEST(conversion, yottabytes) {
-  auto s = 500_ZB;
-  EXPECT_EQ(s.yottabytes(), .5) << "Size conversion to yottabytes should work";
+  auto s = 1_RB;
+  EXPECT_EQ(s.yottabytes(), 1000) << "Size conversion to yottabytes should work";
 };
 
 GTEST_TEST(conversion, yobibytes) {
-  auto s = 512_ZiB;
-  EXPECT_EQ(s.yobibytes(), .5) << "Size conversion to yobibytes should work";
+  auto s = 1_RiB;
+  EXPECT_EQ(s.yobibytes(), 1024) << "Size conversion to yobibytes should work";
+};
+
+GTEST_TEST(conversion, ronnabytes) {
+  auto s = 1_QB;
+  EXPECT_EQ(s.ronnabytes(), 1000) << "Size conversion to ronnabytes should work";
+};
+
+GTEST_TEST(conversion, robibytes) {
+  auto s = 1_QiB;
+  EXPECT_EQ(s.robibytes(), 1024) << "Size conversion to robibytes should work";
+};
+
+GTEST_TEST(conversion, quettabytes) {
+  auto s = 500_RB;
+  EXPECT_EQ(s.quettabytes(), .5) << "Size conversion to quettabytes should work";
+};
+
+GTEST_TEST(conversion, quebibytes) {
+  auto s = 512_RiB;
+  EXPECT_EQ(s.quebibytes(), .5) << "Size conversion to quebibytes should work";
 };
 
 #pragma endregion
@@ -433,6 +489,8 @@ GTEST_TEST(operators_ostream_out, ostream_base2) {
   EXPECT_EQ(get_stream_output(7_EiB), "7 EiB") << "[Base2] - Should display 7_EiB as '7 EiB'";
   EXPECT_EQ(get_stream_output(8_ZiB), "8 ZiB") << "[Base2] - Should display 8_ZiB as '8 ZiB'";
   EXPECT_EQ(get_stream_output(9_YiB), "9 YiB") << "[Base2] - Should display 9_YiB as '9 YiB'";
+  EXPECT_EQ(get_stream_output(10_RiB), "10 RiB") << "[Base2] - Should display 10_RiB as '10 RiB'";
+  EXPECT_EQ(get_stream_output(11_QiB), "11 QiB") << "[Base2] - Should display 11_QiB as '11 QiB'";
   EXPECT_EQ(get_stream_output((1_GB).to_base2()), "953.674 MiB") << "[Base2] - Should display 1_GB as '953.674 MiB'";
   EXPECT_EQ(get_stream_output((2_GB).to_base2()), "1.86265 GiB") << "[Base2] - Should display 2_GB as '1.86265 GiB'";
   EXPECT_EQ(get_stream_output(512000_B), "500 KiB") << "[Base2] - Should display 512000_B as '500 KiB'";
@@ -448,6 +506,8 @@ GTEST_TEST(operators_ostream_out, ostream_base10) {
   EXPECT_EQ(get_stream_output(7_EB), "7 EB") << "[Base10] - Should display 7_EB as '7 EB'";
   EXPECT_EQ(get_stream_output(8_ZB), "8 ZB") << "[Base10] - Should display 8_ZB as '8 ZB'";
   EXPECT_EQ(get_stream_output(9_YB), "9 YB") << "[Base10] - Should display 9_YB as '9 YB'";
+  EXPECT_EQ(get_stream_output(10_RB), "10 RB") << "[Base10] - Should display 10_RB as '10 RB'";
+  EXPECT_EQ(get_stream_output(11_QB), "11 QB") << "[Base10] - Should display 11_QB as '11 QB'";
   EXPECT_EQ(get_stream_output((1_GiB).to_base10()), "1.07374 GB") << "[Base10] - Should display 1_GiB as '1.07374 GB'";
   EXPECT_EQ(get_stream_output((1000_GiB).to_base10()), "1.07374 TB") << "[Base10] - Should display 1000_GiB as '1.07374 TB'";
   EXPECT_EQ(get_stream_output((1000_B).to_base10()), "1 KB") << "[Base10] - Should display 1000_B as '1 KB'";
@@ -467,6 +527,8 @@ GTEST_TEST(styles, abbreviated) {
   EXPECT_EQ(get_stream_output(7_EB), "7 EB") << "[Abbreviated] - Should display 7_EB as '7 EB'";
   EXPECT_EQ(get_stream_output(8_ZB), "8 ZB") << "[Abbreviated] - Should display 8_ZB as '8 ZB'";
   EXPECT_EQ(get_stream_output(9_YB), "9 YB") << "[Abbreviated] - Should display 9_YB as '9 YB'";
+  EXPECT_EQ(get_stream_output(10_RB), "10 RB") << "[Abbreviated] - Should display 10_RB as '10 RB'";
+  EXPECT_EQ(get_stream_output(11_QB), "11 QB") << "[Abbreviated] - Should display 11_QB as '11 QB'";
   EXPECT_EQ(get_stream_output(2_KiB), "2 KiB") << "[Abbreviated] - Should display 2_KiB as '2 KiB'";
   EXPECT_EQ(get_stream_output(3_MiB), "3 MiB") << "[Abbreviated] - Should display 3_MiB as '3 MiB'";
   EXPECT_EQ(get_stream_output(4_GiB), "4 GiB") << "[Abbreviated] - Should display 4_GiB as '4 GiB'";
@@ -475,6 +537,8 @@ GTEST_TEST(styles, abbreviated) {
   EXPECT_EQ(get_stream_output(7_EiB), "7 EiB") << "[Abbreviated] - Should display 7_EiB as '7 EiB'";
   EXPECT_EQ(get_stream_output(8_ZiB), "8 ZiB") << "[Abbreviated] - Should display 8_ZiB as '8 ZiB'";
   EXPECT_EQ(get_stream_output(9_YiB), "9 YiB") << "[Abbreviated] - Should display 9_YiB as '9 YiB'";
+  EXPECT_EQ(get_stream_output(10_RiB), "10 RiB") << "[Abbreviated] - Should display 10_RiB as '10 RiB'";
+  EXPECT_EQ(get_stream_output(11_QiB), "11 QiB") << "[Abbreviated] - Should display 11_QiB as '11 QiB'";
 }
 
 GTEST_TEST(styles, abbreviated_lowercase) {
@@ -488,6 +552,8 @@ GTEST_TEST(styles, abbreviated_lowercase) {
   EXPECT_EQ(get_stream_output(7_EB), "7 eb") << "[AbbreviatedLowercase] - Should display 7_EB as '7 eb'";
   EXPECT_EQ(get_stream_output(8_ZB), "8 zb") << "[AbbreviatedLowercase] - Should display 8_ZB as '8 zb'";
   EXPECT_EQ(get_stream_output(9_YB), "9 yb") << "[AbbreviatedLowercase] - Should display 9_YB as '9 yb'";
+  EXPECT_EQ(get_stream_output(10_RB), "10 rb") << "[AbbreviatedLowercase] - Should display 10_RB as '10 rb'";
+  EXPECT_EQ(get_stream_output(11_QB), "11 qb") << "[AbbreviatedLowercase] - Should display 11_QB as '11 qb'";
   EXPECT_EQ(get_stream_output(2_KiB), "2 kib") << "[AbbreviatedLowercase] - Should display 2_KiB as '2 kib'";
   EXPECT_EQ(get_stream_output(3_MiB), "3 mib") << "[AbbreviatedLowercase] - Should display 3_MiB as '3 mib'";
   EXPECT_EQ(get_stream_output(4_GiB), "4 gib") << "[AbbreviatedLowercase] - Should display 4_GiB as '4 gib'";
@@ -496,6 +562,8 @@ GTEST_TEST(styles, abbreviated_lowercase) {
   EXPECT_EQ(get_stream_output(7_EiB), "7 eib") << "[AbbreviatedLowercase] - Should display 7_EiB as '7 eib'";
   EXPECT_EQ(get_stream_output(8_ZiB), "8 zib") << "[AbbreviatedLowercase] - Should display 8_ZiB as '8 zib'";
   EXPECT_EQ(get_stream_output(9_YiB), "9 yib") << "[AbbreviatedLowercase] - Should display 9_YiB as '9 yib'";
+  EXPECT_EQ(get_stream_output(10_RiB), "10 rib") << "[AbbreviatedLowercase] - Should display 10_RiB as '10 rib'";
+  EXPECT_EQ(get_stream_output(11_QiB), "11 qib") << "[AbbreviatedLowercase] - Should display 11_QiB as '11 qib'";
 }
 
 GTEST_TEST(styles, full) {
@@ -511,6 +579,8 @@ GTEST_TEST(styles, full) {
   EXPECT_EQ(get_stream_output(7_EB), "7 Exabytes") << "[Long] - Should display 7_EB as '7 Exabytes'";
   EXPECT_EQ(get_stream_output(8_ZB), "8 Zettabytes") << "[Long] - Should display 8_ZB as '8 Zettabytes'";
   EXPECT_EQ(get_stream_output(9_YB), "9 Yottabytes") << "[Long] - Should display 9_YB as '9 Yottabytes'";
+  EXPECT_EQ(get_stream_output(10_RB), "10 Ronnabytes") << "[Long] - Should display 10_RB as '10 Ronnabytes'";
+  EXPECT_EQ(get_stream_output(11_QB), "11 Quettabytes") << "[Long] - Should display 11_QB as '11 Quettabytes'";
   EXPECT_EQ(get_stream_output(1_KiB), "1 Kibibyte") << "[Long] - Should display 1_KiB as '1 Kibibyte'";
   EXPECT_EQ(get_stream_output(2_KiB), "2 Kibibytes") << "[Long] - Should display 2_KiB as '2 Kibibytes'";
   EXPECT_EQ(get_stream_output(3_MiB), "3 Mebibytes") << "[Long] - Should display 3_MiB as '3 Mebibytes'";
@@ -520,6 +590,8 @@ GTEST_TEST(styles, full) {
   EXPECT_EQ(get_stream_output(7_EiB), "7 Exbibytes") << "[Long] - Should display 7_EiB as '7 Exbibytes'";
   EXPECT_EQ(get_stream_output(8_ZiB), "8 Zebibytes") << "[Long] - Should display 8_ZiB as '8 Zebibytes'";
   EXPECT_EQ(get_stream_output(9_YiB), "9 Yobibytes") << "[Long] - Should display 9_YiB as '9 Yobibytes'";
+  EXPECT_EQ(get_stream_output(10_RiB), "10 Robibytes") << "[Long] - Should display 10_RiB as '10 Robibytes'";
+  EXPECT_EQ(get_stream_output(11_QiB), "11 Quebibytes") << "[Long] - Should display 11_QiB as '11 Quebibytes'";
 }
 
 GTEST_TEST(styles, full_lowercase) {
@@ -535,6 +607,8 @@ GTEST_TEST(styles, full_lowercase) {
   EXPECT_EQ(get_stream_output(7_EB), "7 exabytes") << "[LongLowercase] - Should display 7_EB as '7 exabytes'";
   EXPECT_EQ(get_stream_output(8_ZB), "8 zettabytes") << "[LongLowercase] - Should display 8_ZB as '8 zettabytes'";
   EXPECT_EQ(get_stream_output(9_YB), "9 yottabytes") << "[LongLowercase] - Should display 9_YB as '9 yottabytes'";
+  EXPECT_EQ(get_stream_output(10_RB), "10 ronnabytes") << "[LongLowercase] - Should display 10_RB as '10 ronnabytes'";
+  EXPECT_EQ(get_stream_output(11_QB), "11 quettabytes") << "[LongLowercase] - Should display 11_QB as '11 quettabytes'";
   EXPECT_EQ(get_stream_output(1_KiB), "1 kibibyte") << "[LongLowercase] - Should display 1_KiB as '1 kibibyte'";
   EXPECT_EQ(get_stream_output(2_KiB), "2 kibibytes") << "[LongLowercase] - Should display 2_KiB as '2 kibibytes'";
   EXPECT_EQ(get_stream_output(3_MiB), "3 mebibytes") << "[LongLowercase] - Should display 3_MiB as '3 mebibytes'";
@@ -544,6 +618,8 @@ GTEST_TEST(styles, full_lowercase) {
   EXPECT_EQ(get_stream_output(7_EiB), "7 exbibytes") << "[LongLowercase] - Should display 7_EiB as '7 exbibytes'";
   EXPECT_EQ(get_stream_output(8_ZiB), "8 zebibytes") << "[LongLowercase] - Should display 8_ZiB as '8 zebibytes'";
   EXPECT_EQ(get_stream_output(9_YiB), "9 yobibytes") << "[LongLowercase] - Should display 9_YiB as '9 yobibytes'";
+  EXPECT_EQ(get_stream_output(10_RiB), "10 robibytes") << "[LongLowercase] - Should display 10_RiB as '10 robibytes'";
+  EXPECT_EQ(get_stream_output(11_QiB), "11 quebibytes") << "[LongLowercase] - Should display 11_QiB as '11 quebibytes'";
 }
 
 #pragma endregion
@@ -567,6 +643,10 @@ GTEST_TEST(Unit, get_unit_via_Unit_enum) {
   EXPECT_EQ(size::find_unit_pair(size::Unit::ZETTABYTE), size::units.at(14)) << "Should return size::units.at(14)";
   EXPECT_EQ(size::find_unit_pair(size::Unit::YOBIBYTE), size::units.at(15)) << "Should return size::units.at(15)";
   EXPECT_EQ(size::find_unit_pair(size::Unit::YOTTABYTE), size::units.at(16)) << "Should return size::units.at(16)";
+  EXPECT_EQ(size::find_unit_pair(size::Unit::ROBIBYTE), size::units.at(17)) << "Should return size::units.at(17)";
+  EXPECT_EQ(size::find_unit_pair(size::Unit::RONNABYTE), size::units.at(18)) << "Should return size::units.at(18)";
+  EXPECT_EQ(size::find_unit_pair(size::Unit::QUEBIBYTE), size::units.at(19)) << "Should return size::units.at(19)";
+  EXPECT_EQ(size::find_unit_pair(size::Unit::QUETTABYTE), size::units.at(20)) << "Should return size::units.at(20)";
 }
 
 #pragma endregion
