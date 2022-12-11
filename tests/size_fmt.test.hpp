@@ -91,8 +91,10 @@ GTEST_TEST(FMT, change_value_behavior) {
 }
 
 GTEST_TEST(FMT, precision) {
-  EXPECT_EQ(fmt::format("{:.2#d%f}", 1_KiB), "1.02") << "Should display '{:.2#d%f}' of 1_KiB as '1.02'";
-  EXPECT_EQ(fmt::format("{:.2#d%f}", 1_KB), "1.00") << "Should display '{:.2#d%f}' of 1_KB as '1.00'";
+  EXPECT_EQ(fmt::format("{:.2}", 1_KB), "1.00 KB") << "Should display '{:.2}' of 1_KB as '1.00 KB'";
+  EXPECT_EQ(fmt::format("{:.2}", 1_KiB), "1.00 KiB") << "Should display '{:.2}' of 1_KiB as '1.00 KiB'";
+  EXPECT_EQ(fmt::format("{:.2#d}", 1_KiB), "1.02 KB") << "Should display '{:.2#d}' of 1_KiB as '1.02 KB'";
+  EXPECT_EQ(fmt::format("{:.2#b}", 1_KB), "1000 B") << "Should display '{:.2#b}' of 1_KB as '1000 B'";
   // 1'047'104_B is 1022.5625 KiB
   EXPECT_EQ(fmt::format("{:.0#b%f}", 1'047'104_B), "1023") << "Should display '{:.0#b%f}' of 1'047'104_B as '1023'";
   EXPECT_EQ(fmt::format("{:.1#b%f}", 1'047'104_B), "1022.6") << "Should display '{:.1#b%f}' of 1'047'104_B as '1022.6'";

@@ -24,10 +24,6 @@ using Positionnal = std::variant<PositionnalValue, PositionnalUnit>;
 constexpr const auto DEFAULT_POSITIONNAL_VALUE = 'N'; // `N` for `No format`
 constexpr const auto DEFAULT_POSITIONNAL_UNIT = size::Style::Abbreviated;
 constexpr const auto DEFAULT_PRECISION = 6; // default precision for floating point numbers see https://en.cppreference.com/w/cpp/io/ios_base/precision
-const std::vector<Positionnal> DEFAULT_POSITIONNALS_CONFIG = {DEFAULT_POSITIONNAL_VALUE, DEFAULT_POSITIONNAL_UNIT};
-const std::vector<std::string> DEFAULT_POSITIONNAL_SEPARATORS_CONFIG = {" "};
-constexpr const std::string_view DEFAULT_FILL = " ";
-constexpr const std::string_view DEFAULT_ALIGN = ">";
 
 /* FMT Spec for Size library */
 /**
@@ -48,19 +44,19 @@ constexpr const std::string_view DEFAULT_ALIGN = ">";
 template <size::Base unitBase> struct fmt::formatter<size::Size<unitBase>> {
   std::string format_final = "{:";
   // precision: integer
-  std::optional<int> precision = DEFAULT_PRECISION;
+  std::optional<int> precision;
 
   // base: 'b' - binary, 'd' - decimal
   size::Base base = unitBase;
   // unit type: 'B' - bytes, 'K' - kilobytes, 'M' - megabytes, 'G' - gigabytes, 'T' - terabytes, 'P' - petabytes, 'E' - exabytes, 'Z' - zettabytes, 'Y' - yottabytes
   // if still not specified, will use the most appropriate unit
-  std::optional<size::Unit> unit = std::nullopt;
+  std::optional<size::Unit> unit;
   // positionnal elements
   std::optional<std::vector<Positionnal>> positionnals;
   // postitionnal separator
   std::optional<std::vector<std::string>> positionnal_separators;
 
-  constexpr auto parse_positionnal_args(fmt::format_parse_context::iterator it) -> Positionnal {
+  constexpr auto parse_positionnal_args(fmt::format_parse_context::iterator it) const -> Positionnal {
     switch (*it) {
       case 'V':
         return DEFAULT_POSITIONNAL_VALUE;
@@ -154,13 +150,20 @@ template <size::Base unitBase> struct fmt::formatter<size::Size<unitBase>> {
                                        : s.nearest_unit(base);
     const auto& ratio = static_cast<LD>(s.bytes()) / static_cast<LD>(unit_base);
 
-    const auto _positionnals = positionnals.value_or(DEFAULT_POSITIONNALS_CONFIG);
-    const auto _positionnal_separators = positionnal_separators.value_or(DEFAULT_POSITIONNAL_SEPARATORS_CONFIG);
+    const auto _positionnals = positionnals.value_or(
+        precision.has_value()
+            ? std::vector<Positionnal>{PositionnalValue{'f'},
+                                       DEFAULT_POSITIONNAL_UNIT}
+            : std::vector<Positionnal>{DEFAULT_POSITIONNAL_VALUE,
+                                       DEFAULT_POSITIONNAL_UNIT});
+    const auto _positionnal_separators =
+        positionnal_separators.value_or(std::vector<std::string>{" "});
 
     auto it_pos = _positionnals.begin();
     auto it_sep = _positionnal_separators.begin();
     const auto end_pos = _positionnals.end();
     const auto end_sep = _positionnal_separators.end();
+    const auto prec = precision.value_or(DEFAULT_PRECISION);
 
     for (;it_pos != end_pos; ++it_pos, ++it_sep) {
       if (std::holds_alternative<PositionnalUnit>(*it_pos)) {
@@ -173,9 +176,9 @@ template <size::Base unitBase> struct fmt::formatter<size::Size<unitBase>> {
         switch (type) {
           case 'f':
 #ifndef SIZE_KEEP_BYTES_DECIMALS
-            if (unit_base == size::Unit::BYTE || precision.value() == 0)
+            if (unit_base == size::Unit::BYTE || prec == 0)
 #else
-            if (precision.value() == 0)
+            if (prec == 0)
 #endif
               res += fmt::format("{:.0f}", ratio);
             else
@@ -183,11 +186,11 @@ template <size::Base unitBase> struct fmt::formatter<size::Size<unitBase>> {
                   "{}.{}", (BT)ratio,
                   fmt::format("{:.{}f}",
                               fmod(ratio, 1.),
-                              precision.value())
+                              prec)
                       .substr(2));
             break;
           case 'e':
-            res += fmt::format("{:.{}e}", ratio, precision.value());
+            res += fmt::format("{:.{}e}", ratio, prec);
             break;
           case 'N':
             res += fmt::format("{}", ratio);
