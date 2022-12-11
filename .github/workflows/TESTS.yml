@@ -1,0 +1,55 @@
+name: Unit Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+# use matrix when macos work without manually setting `--cxx`
+
+jobs:
+  test-macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Xmake
+        uses: xmake-io/github-action-setup-xmake@v1
+      - name: Build
+        run: |
+          xmake f -y --cxx=$(brew --prefix llvm@14)/bin/clang
+          xmake -b size-tests
+      - name: Run
+        run: |
+          xmake run size-tests
+
+  test-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Xmake
+        uses: xmake-io/github-action-setup-xmake@v1
+      - name: Build
+        run: |
+          xmake -y -b size-tests
+      - name: Run
+        run: |
+          xmake run size-tests
+
+  test-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Xmake
+        uses: xmake-io/github-action-setup-xmake@v1
+      - name: Build
+        run: |
+          xmake -y -b size-tests
+      - name: Run
+        run: |
+          xmake run size-tests

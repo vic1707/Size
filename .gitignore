@@ -1,0 +1,5 @@
+build
+.xmake
+.DS_Store
+.vscode/*
+!.vscode/settings.json
