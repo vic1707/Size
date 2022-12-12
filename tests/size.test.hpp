@@ -411,25 +411,29 @@ GTEST_TEST(operators_arithmetic, modulo) {
 
 GTEST_TEST(operators_arithmetic, postfix_increment) {
   auto s = 1_KB;
-  s++;
+  auto x = s++;
+  EXPECT_EQ(x.bytes(), 1000) << "Should be able to postfix increment a size";
   EXPECT_EQ(s.bytes(), 1001) << "Should be able to postfix increment a size";
 };
 
 GTEST_TEST(operators_arithmetic, prefix_increment) {
   auto s = 1_KB;
-  ++s;
+  auto x = ++s;
+  EXPECT_EQ(x.bytes(), 1001) << "Should be able to prefix increment a size";
   EXPECT_EQ(s.bytes(), 1001) << "Should be able to prefix increment a size";
 };
 
 GTEST_TEST(operators_arithmetic, postfix_decrement) {
   auto s = 1_KB;
-  s--;
+  auto x = s--;
+  EXPECT_EQ(x.bytes(), 1000) << "Should be able to postfix decrement a size";
   EXPECT_EQ(s.bytes(), 999) << "Should be able to postfix decrement a size";
 };
 
 GTEST_TEST(operators_arithmetic, prefix_decrement) {
   auto s = 1_KB;
-  --s;
+  auto x = --s;
+  EXPECT_EQ(x.bytes(), 999) << "Should be able to prefix decrement a size";
   EXPECT_EQ(s.bytes(), 999) << "Should be able to prefix decrement a size";
 };
 
