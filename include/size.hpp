@@ -41,7 +41,7 @@ namespace size {
       [[nodiscard]] constexpr auto quebibytes() const noexcept -> LD { return static_cast<LD>(m_bytes) / static_cast<LD>(Unit::QUEBIBYTE); }
 
       /* Base conversion */
-      [[nodiscard]] constexpr auto to_base2()  const noexcept -> Size<Base::Base2> requires (base == Base::Base10) { return Size<Base::Base2>(m_bytes); }
+      [[nodiscard]] constexpr auto to_base2() const noexcept -> Size<Base::Base2> requires (base == Base::Base10) { return Size<Base::Base2>(m_bytes); }
       [[nodiscard]] constexpr auto to_base10() const noexcept -> Size<Base::Base10> requires (base == Base::Base2) { return Size<Base::Base10>(m_bytes); }
 
       /* Constructors */
@@ -56,44 +56,51 @@ namespace size {
       ~Size() noexcept = default;
 
       /* Operators Overloading */
-      // comparison
-      template<Base otherBase> [[nodiscard]] constexpr friend auto operator<=>(const Size& lhs, const Size<otherBase>& rhs) noexcept -> std::strong_ordering { return lhs.m_bytes <=> rhs.bytes(); }
-      template<Base otherBase> [[nodiscard]] constexpr friend auto operator==(const Size& lhs, const Size<otherBase>& rhs) noexcept -> bool { return lhs.m_bytes == rhs.bytes(); }
+      // comparison with other bases
+      template<Base otherBase> [[nodiscard]] constexpr auto operator<=>(const Size<otherBase>& rhs) const noexcept -> std::strong_ordering { return m_bytes <=> rhs.bytes(); }
+      template<Base otherBase> [[nodiscard]] constexpr auto operator==(const Size<otherBase>& rhs) const noexcept -> bool { return m_bytes == rhs.bytes(); }
+      // comparison with integral types
+      [[nodiscard]] constexpr auto operator<=>(const std::integral auto& rhs) const noexcept -> std::strong_ordering { return m_bytes <=> static_cast<BT>(rhs); }
+      [[nodiscard]] constexpr auto operator==(const std::integral auto& rhs) const noexcept -> bool { return m_bytes == static_cast<BT>(rhs); }
+      // comparison with BT type (not supported by std::integral)
+      [[nodiscard]] constexpr auto operator<=>(const BT& rhs) const noexcept -> std::strong_ordering { return m_bytes <=> rhs; }
+      [[nodiscard]] constexpr auto operator==(const BT& rhs) const noexcept -> bool { return m_bytes == rhs; }
       // arithmetic
-      [[nodiscard]] constexpr friend auto operator+(const Size& lhs, const Size& rhs) noexcept -> Size { return lhs.m_bytes + rhs.m_bytes; }
-      [[nodiscard]] constexpr friend auto operator-(const Size& lhs, const Size& rhs) noexcept -> Size { return lhs.m_bytes - rhs.m_bytes; }
-      [[nodiscard]] constexpr friend auto operator*(const Size& lhs, const Size& rhs) noexcept -> Size { return lhs.m_bytes * rhs.m_bytes; }
-      [[nodiscard]] constexpr friend auto operator/(const Size& lhs, const Size& rhs) noexcept -> Size { return lhs.m_bytes / rhs.m_bytes; }
-      [[nodiscard]] constexpr friend auto operator%(const Size& lhs, const Size& rhs) noexcept -> Size { return lhs.m_bytes % rhs.m_bytes; }
+      [[nodiscard]] constexpr auto operator+(const Size& rhs) const noexcept -> Size { return m_bytes + rhs.m_bytes; }
+      [[nodiscard]] constexpr auto operator-(const Size& rhs) const noexcept -> Size { return m_bytes - rhs.m_bytes; }
+      [[nodiscard]] constexpr auto operator*(const Size& rhs) const noexcept -> Size { return m_bytes * rhs.m_bytes; }
+      [[nodiscard]] constexpr auto operator/(const Size& rhs) const noexcept -> Size { return m_bytes / rhs.m_bytes; }
+      [[nodiscard]] constexpr auto operator%(const Size& rhs) const noexcept -> Size { return m_bytes % rhs.m_bytes; }
       // copy assignment operators
       constexpr auto operator=(const Size& other) noexcept -> Size& = default;
       constexpr auto operator=(Size&& other) noexcept -> Size& = default;
       // compound assignment
-      constexpr friend auto operator+=(Size& lhs, const Size& rhs) noexcept -> Size& { lhs.m_bytes += rhs.m_bytes; return lhs; }
-      constexpr friend auto operator-=(Size& lhs, const Size& rhs) noexcept -> Size& { lhs.m_bytes -= rhs.m_bytes; return lhs; }
-      constexpr friend auto operator*=(Size& lhs, const Size& rhs) noexcept -> Size& { lhs.m_bytes *= rhs.m_bytes; return lhs; }
-      constexpr friend auto operator/=(Size& lhs, const Size& rhs) noexcept -> Size& { lhs.m_bytes /= rhs.m_bytes; return lhs; }
-      constexpr friend auto operator%=(Size& lhs, const Size& rhs) noexcept -> Size& { lhs.m_bytes %= rhs.m_bytes; return lhs; }
+      constexpr auto operator+=(const Size& rhs) noexcept -> Size& { m_bytes += rhs.m_bytes; return *this; }
+      constexpr auto operator-=(const Size& rhs) noexcept -> Size& { m_bytes -= rhs.m_bytes; return *this; }
+      constexpr auto operator*=(const Size& rhs) noexcept -> Size& { m_bytes *= rhs.m_bytes; return *this; }
+      constexpr auto operator/=(const Size& rhs) noexcept -> Size& { m_bytes /= rhs.m_bytes; return *this; }
+      constexpr auto operator%=(const Size& rhs) noexcept -> Size& { m_bytes %= rhs.m_bytes; return *this; }
       // prefix increment and decrement
-      constexpr friend auto operator++(Size& size) noexcept -> Size& { ++size.m_bytes; return size; }
-      constexpr friend auto operator--(Size& size) noexcept -> Size& { --size.m_bytes; return size; }
+      constexpr auto operator++() noexcept -> Size& { ++m_bytes; return *this; }
+      constexpr auto operator--() noexcept -> Size& { --m_bytes; return *this; }
       // postfix increment and decrement
-      constexpr friend auto operator++(Size& size, int) noexcept -> Size { ++size; return size; }
-      constexpr friend auto operator--(Size& size, int) noexcept -> Size { --size; return size; }
+      constexpr auto operator++(int) noexcept -> Size { auto old = *this; ++m_bytes; return old; }
+      constexpr auto operator--(int) noexcept -> Size { auto old = *this; --m_bytes; return old; }
       // shift bitwise
-      [[nodiscard]] constexpr friend auto operator<<(const Size& size, const int shift) noexcept -> Size { return size.m_bytes << shift; }  // assert((std::numeric_limits<BT>::max() >> shift) > size.m_bytes);
-      [[nodiscard]] constexpr friend auto operator>>(const Size& size, const int shift) noexcept -> Size { return size.m_bytes >> shift; }
-
-      /* Formatting */
-      friend std::ostream& operator<<(std::ostream& os, const Size& size) {
-        const auto& [unit_base, unit_names] = size.nearest_unit();
-        const auto ratio = static_cast<LD>(size.m_bytes) / static_cast<LD>(unit_base);
-
-        return os << ratio
-                  << " " << unit_names.at(static_cast<int>(CURRENT_STYLE))
-                  << (ratio != 1 && (CURRENT_STYLE == Style::Long || CURRENT_STYLE == Style::LongLowercase) ? "s" : "");
-      }
+      [[nodiscard]] constexpr auto operator<<(const int shift) noexcept -> Size { return m_bytes << shift; }  // assert((std::numeric_limits<BT>::max() >> shift) > size.m_bytes);
+      [[nodiscard]] constexpr auto operator>>(const int shift) noexcept -> Size { return m_bytes >> shift; }  // assert((std::numeric_limits<BT>::max() << shift) > size.m_bytes);
   }; // class Size
+  
+  /* Formatting */
+  template<Base base>
+  std::ostream& operator<<(std::ostream& os, const Size<base>& size) {
+    const auto& [unit_base, unit_names] = size.nearest_unit();
+    const auto ratio = static_cast<LD>(size.bytes()) / static_cast<LD>(unit_base);
+
+    return os << ratio
+              << " " << unit_names.at(static_cast<int>(CURRENT_STYLE))
+              << (ratio != 1 && (CURRENT_STYLE == Style::Long || CURRENT_STYLE == Style::LongLowercase) ? "s" : "");
+  }
 
   template<Base base = DEFAULT_BASE>
   [[nodiscard]] constexpr auto       from_bytes(std::integral auto       bytes) noexcept -> Size<base> { return bytes; }
