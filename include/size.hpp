@@ -96,29 +96,29 @@ namespace size {
   }; // class Size
 
   template<Base base = DEFAULT_BASE>
-  [[nodiscard]] static constexpr auto       from_bytes(std::integral auto       bytes) noexcept -> Size<base> { return bytes; }
+  [[nodiscard]] constexpr auto       from_bytes(std::integral auto       bytes) noexcept -> Size<base> { return bytes; }
   // base 10
-  [[nodiscard]] static constexpr auto   from_kilobytes(std::integral auto   kilobytes) noexcept -> Size<Base::Base10> { return   kilobytes * static_cast<BT>(  Unit::KILOBYTE); }
-  [[nodiscard]] static constexpr auto   from_megabytes(std::integral auto   megabytes) noexcept -> Size<Base::Base10> { return   megabytes * static_cast<BT>(  Unit::MEGABYTE); }
-  [[nodiscard]] static constexpr auto   from_gigabytes(std::integral auto   gigabytes) noexcept -> Size<Base::Base10> { return   gigabytes * static_cast<BT>(  Unit::GIGABYTE); }
-  [[nodiscard]] static constexpr auto   from_terabytes(std::integral auto   terabytes) noexcept -> Size<Base::Base10> { return   terabytes * static_cast<BT>(  Unit::TERABYTE); }
-  [[nodiscard]] static constexpr auto   from_petabytes(std::integral auto   petabytes) noexcept -> Size<Base::Base10> { return   petabytes * static_cast<BT>(  Unit::PETABYTE); }
-  [[nodiscard]] static constexpr auto    from_exabytes(std::integral auto    exabytes) noexcept -> Size<Base::Base10> { return    exabytes * static_cast<BT>(   Unit::EXABYTE); }
-  [[nodiscard]] static constexpr auto  from_zettabytes(std::integral auto  zettabytes) noexcept -> Size<Base::Base10> { return  zettabytes * static_cast<BT>( Unit::ZETTABYTE); }
-  [[nodiscard]] static constexpr auto  from_yottabytes(std::integral auto  yottabytes) noexcept -> Size<Base::Base10> { return  yottabytes * static_cast<BT>( Unit::YOTTABYTE); }
-  [[nodiscard]] static constexpr auto  from_ronnabytes(std::integral auto  ronnabytes) noexcept -> Size<Base::Base10> { return  ronnabytes * static_cast<BT>( Unit::RONNABYTE); }
-  [[nodiscard]] static constexpr auto from_quettabytes(std::integral auto quettabytes) noexcept -> Size<Base::Base10> { return quettabytes * static_cast<BT>(Unit::QUETTABYTE); }
+  [[nodiscard]] constexpr auto   from_kilobytes(std::integral auto   kilobytes) noexcept -> Size<Base::Base10> { return   kilobytes * static_cast<BT>(  Unit::KILOBYTE); }
+  [[nodiscard]] constexpr auto   from_megabytes(std::integral auto   megabytes) noexcept -> Size<Base::Base10> { return   megabytes * static_cast<BT>(  Unit::MEGABYTE); }
+  [[nodiscard]] constexpr auto   from_gigabytes(std::integral auto   gigabytes) noexcept -> Size<Base::Base10> { return   gigabytes * static_cast<BT>(  Unit::GIGABYTE); }
+  [[nodiscard]] constexpr auto   from_terabytes(std::integral auto   terabytes) noexcept -> Size<Base::Base10> { return   terabytes * static_cast<BT>(  Unit::TERABYTE); }
+  [[nodiscard]] constexpr auto   from_petabytes(std::integral auto   petabytes) noexcept -> Size<Base::Base10> { return   petabytes * static_cast<BT>(  Unit::PETABYTE); }
+  [[nodiscard]] constexpr auto    from_exabytes(std::integral auto    exabytes) noexcept -> Size<Base::Base10> { return    exabytes * static_cast<BT>(   Unit::EXABYTE); }
+  [[nodiscard]] constexpr auto  from_zettabytes(std::integral auto  zettabytes) noexcept -> Size<Base::Base10> { return  zettabytes * static_cast<BT>( Unit::ZETTABYTE); }
+  [[nodiscard]] constexpr auto  from_yottabytes(std::integral auto  yottabytes) noexcept -> Size<Base::Base10> { return  yottabytes * static_cast<BT>( Unit::YOTTABYTE); }
+  [[nodiscard]] constexpr auto  from_ronnabytes(std::integral auto  ronnabytes) noexcept -> Size<Base::Base10> { return  ronnabytes * static_cast<BT>( Unit::RONNABYTE); }
+  [[nodiscard]] constexpr auto from_quettabytes(std::integral auto quettabytes) noexcept -> Size<Base::Base10> { return quettabytes * static_cast<BT>(Unit::QUETTABYTE); }
   // base 2
-  [[nodiscard]] static constexpr auto  from_kibibytes(std::integral auto  kibibytes) noexcept -> Size<Base::Base2> { return  kibibytes * static_cast<BT>( Unit::KIBIBYTE); }
-  [[nodiscard]] static constexpr auto  from_mebibytes(std::integral auto  mebibytes) noexcept -> Size<Base::Base2> { return  mebibytes * static_cast<BT>( Unit::MEBIBYTE); }
-  [[nodiscard]] static constexpr auto  from_gibibytes(std::integral auto  gibibytes) noexcept -> Size<Base::Base2> { return  gibibytes * static_cast<BT>( Unit::GIBIBYTE); }
-  [[nodiscard]] static constexpr auto  from_tebibytes(std::integral auto  tebibytes) noexcept -> Size<Base::Base2> { return  tebibytes * static_cast<BT>( Unit::TEBIBYTE); }
-  [[nodiscard]] static constexpr auto  from_pebibytes(std::integral auto  pebibytes) noexcept -> Size<Base::Base2> { return  pebibytes * static_cast<BT>( Unit::PEBIBYTE); }
-  [[nodiscard]] static constexpr auto  from_exbibytes(std::integral auto  exbibytes) noexcept -> Size<Base::Base2> { return  exbibytes * static_cast<BT>( Unit::EXBIBYTE); }
-  [[nodiscard]] static constexpr auto  from_zebibytes(std::integral auto  zebibytes) noexcept -> Size<Base::Base2> { return  zebibytes * static_cast<BT>( Unit::ZEBIBYTE); }
-  [[nodiscard]] static constexpr auto  from_yobibytes(std::integral auto  yobibytes) noexcept -> Size<Base::Base2> { return  yobibytes * static_cast<BT>( Unit::YOBIBYTE); }
-  [[nodiscard]] static constexpr auto  from_robibytes(std::integral auto  robibytes) noexcept -> Size<Base::Base2> { return  robibytes * static_cast<BT>( Unit::ROBIBYTE); }
-  [[nodiscard]] static constexpr auto from_quebibytes(std::integral auto quebibytes) noexcept -> Size<Base::Base2> { return quebibytes * static_cast<BT>(Unit::QUEBIBYTE); }
+  [[nodiscard]] constexpr auto  from_kibibytes(std::integral auto  kibibytes) noexcept -> Size<Base::Base2> { return  kibibytes * static_cast<BT>( Unit::KIBIBYTE); }
+  [[nodiscard]] constexpr auto  from_mebibytes(std::integral auto  mebibytes) noexcept -> Size<Base::Base2> { return  mebibytes * static_cast<BT>( Unit::MEBIBYTE); }
+  [[nodiscard]] constexpr auto  from_gibibytes(std::integral auto  gibibytes) noexcept -> Size<Base::Base2> { return  gibibytes * static_cast<BT>( Unit::GIBIBYTE); }
+  [[nodiscard]] constexpr auto  from_tebibytes(std::integral auto  tebibytes) noexcept -> Size<Base::Base2> { return  tebibytes * static_cast<BT>( Unit::TEBIBYTE); }
+  [[nodiscard]] constexpr auto  from_pebibytes(std::integral auto  pebibytes) noexcept -> Size<Base::Base2> { return  pebibytes * static_cast<BT>( Unit::PEBIBYTE); }
+  [[nodiscard]] constexpr auto  from_exbibytes(std::integral auto  exbibytes) noexcept -> Size<Base::Base2> { return  exbibytes * static_cast<BT>( Unit::EXBIBYTE); }
+  [[nodiscard]] constexpr auto  from_zebibytes(std::integral auto  zebibytes) noexcept -> Size<Base::Base2> { return  zebibytes * static_cast<BT>( Unit::ZEBIBYTE); }
+  [[nodiscard]] constexpr auto  from_yobibytes(std::integral auto  yobibytes) noexcept -> Size<Base::Base2> { return  yobibytes * static_cast<BT>( Unit::YOBIBYTE); }
+  [[nodiscard]] constexpr auto  from_robibytes(std::integral auto  robibytes) noexcept -> Size<Base::Base2> { return  robibytes * static_cast<BT>( Unit::ROBIBYTE); }
+  [[nodiscard]] constexpr auto from_quebibytes(std::integral auto quebibytes) noexcept -> Size<Base::Base2> { return quebibytes * static_cast<BT>(Unit::QUEBIBYTE); }
 }; // namespace size
 
 using ULL = unsigned long long;
