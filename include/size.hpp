@@ -75,11 +75,11 @@ namespace size {
       [[nodiscard]] constexpr auto operator=(const Size& other) noexcept -> Size& = default;
       [[nodiscard]] constexpr auto operator=(Size&& other) noexcept -> Size& = default;
       // compound assignment
-      [[nodiscard]] constexpr auto operator+=(const Size& rhs) noexcept -> Size& { m_bytes += rhs.m_bytes; return *this; }
-      [[nodiscard]] constexpr auto operator-=(const Size& rhs) noexcept -> Size& { m_bytes -= rhs.m_bytes; return *this; }
-      [[nodiscard]] constexpr auto operator*=(const Size& rhs) noexcept -> Size& { m_bytes *= rhs.m_bytes; return *this; }
-      [[nodiscard]] constexpr auto operator/=(const Size& rhs) noexcept -> Size& { m_bytes /= rhs.m_bytes; return *this; }
-      [[nodiscard]] constexpr auto operator%=(const Size& rhs) noexcept -> Size& { m_bytes %= rhs.m_bytes; return *this; }
+      constexpr auto operator+=(const Size& rhs) noexcept -> Size& { m_bytes += rhs.m_bytes; return *this; }
+      constexpr auto operator-=(const Size& rhs) noexcept -> Size& { m_bytes -= rhs.m_bytes; return *this; }
+      constexpr auto operator*=(const Size& rhs) noexcept -> Size& { m_bytes *= rhs.m_bytes; return *this; }
+      constexpr auto operator/=(const Size& rhs) noexcept -> Size& { m_bytes /= rhs.m_bytes; return *this; }
+      constexpr auto operator%=(const Size& rhs) noexcept -> Size& { m_bytes %= rhs.m_bytes; return *this; }
       // prefix increment and decrement
       [[nodiscard]] constexpr auto operator++() noexcept -> Size& { ++m_bytes; return *this; }
       [[nodiscard]] constexpr auto operator--() noexcept -> Size& { --m_bytes; return *this; }
@@ -93,7 +93,7 @@ namespace size {
   
   /* Formatting */
   template<Base base>
-  [[nodiscard]] std::ostream& operator<<(std::ostream& os, const Size<base>& size) {
+  std::ostream& operator<<(std::ostream& os, const Size<base>& size) {
     const auto& [unit_base, unit_names] = size.nearest_unit();
     const auto ratio = static_cast<LD>(size.bytes()) / static_cast<LD>(unit_base);
 
