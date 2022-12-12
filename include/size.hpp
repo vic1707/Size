@@ -57,32 +57,32 @@ namespace size {
 
       /* Operators Overloading */
       // comparison
-      template<Base otherBase> [[nodiscard]] inline constexpr friend auto operator<=>(const Size& lhs, const Size<otherBase>& rhs) noexcept -> std::strong_ordering { return lhs.m_bytes <=> rhs.bytes(); }
-      template<Base otherBase> [[nodiscard]] inline constexpr friend auto operator==(const Size& lhs, const Size<otherBase>& rhs) noexcept -> bool { return lhs.m_bytes == rhs.bytes(); }
+      template<Base otherBase> [[nodiscard]] constexpr friend auto operator<=>(const Size& lhs, const Size<otherBase>& rhs) noexcept -> std::strong_ordering { return lhs.m_bytes <=> rhs.bytes(); }
+      template<Base otherBase> [[nodiscard]] constexpr friend auto operator==(const Size& lhs, const Size<otherBase>& rhs) noexcept -> bool { return lhs.m_bytes == rhs.bytes(); }
       // arithmetic
-      [[nodiscard]] inline constexpr friend auto operator+(const Size& lhs, const Size& rhs) noexcept -> Size { return lhs.m_bytes + rhs.m_bytes; }
-      [[nodiscard]] inline constexpr friend auto operator-(const Size& lhs, const Size& rhs) noexcept -> Size { return lhs.m_bytes - rhs.m_bytes; }
-      [[nodiscard]] inline constexpr friend auto operator*(const Size& lhs, const Size& rhs) noexcept -> Size { return lhs.m_bytes * rhs.m_bytes; }
-      [[nodiscard]] inline constexpr friend auto operator/(const Size& lhs, const Size& rhs) noexcept -> Size { return lhs.m_bytes / rhs.m_bytes; }
-      [[nodiscard]] inline constexpr friend auto operator%(const Size& lhs, const Size& rhs) noexcept -> Size { return lhs.m_bytes % rhs.m_bytes; }
+      [[nodiscard]] constexpr friend auto operator+(const Size& lhs, const Size& rhs) noexcept -> Size { return lhs.m_bytes + rhs.m_bytes; }
+      [[nodiscard]] constexpr friend auto operator-(const Size& lhs, const Size& rhs) noexcept -> Size { return lhs.m_bytes - rhs.m_bytes; }
+      [[nodiscard]] constexpr friend auto operator*(const Size& lhs, const Size& rhs) noexcept -> Size { return lhs.m_bytes * rhs.m_bytes; }
+      [[nodiscard]] constexpr friend auto operator/(const Size& lhs, const Size& rhs) noexcept -> Size { return lhs.m_bytes / rhs.m_bytes; }
+      [[nodiscard]] constexpr friend auto operator%(const Size& lhs, const Size& rhs) noexcept -> Size { return lhs.m_bytes % rhs.m_bytes; }
       // copy assignment operators
-      inline constexpr auto operator=(const Size& other) noexcept -> Size& = default;
-      inline constexpr auto operator=(Size&& other) noexcept -> Size& = default;
+      constexpr auto operator=(const Size& other) noexcept -> Size& = default;
+      constexpr auto operator=(Size&& other) noexcept -> Size& = default;
       // compound assignment
-      inline constexpr friend auto operator+=(Size& lhs, const Size& rhs) noexcept -> Size& { lhs.m_bytes += rhs.m_bytes; return lhs; }
-      inline constexpr friend auto operator-=(Size& lhs, const Size& rhs) noexcept -> Size& { lhs.m_bytes -= rhs.m_bytes; return lhs; }
-      inline constexpr friend auto operator*=(Size& lhs, const Size& rhs) noexcept -> Size& { lhs.m_bytes *= rhs.m_bytes; return lhs; }
-      inline constexpr friend auto operator/=(Size& lhs, const Size& rhs) noexcept -> Size& { lhs.m_bytes /= rhs.m_bytes; return lhs; }
-      inline constexpr friend auto operator%=(Size& lhs, const Size& rhs) noexcept -> Size& { lhs.m_bytes %= rhs.m_bytes; return lhs; }
+      constexpr friend auto operator+=(Size& lhs, const Size& rhs) noexcept -> Size& { lhs.m_bytes += rhs.m_bytes; return lhs; }
+      constexpr friend auto operator-=(Size& lhs, const Size& rhs) noexcept -> Size& { lhs.m_bytes -= rhs.m_bytes; return lhs; }
+      constexpr friend auto operator*=(Size& lhs, const Size& rhs) noexcept -> Size& { lhs.m_bytes *= rhs.m_bytes; return lhs; }
+      constexpr friend auto operator/=(Size& lhs, const Size& rhs) noexcept -> Size& { lhs.m_bytes /= rhs.m_bytes; return lhs; }
+      constexpr friend auto operator%=(Size& lhs, const Size& rhs) noexcept -> Size& { lhs.m_bytes %= rhs.m_bytes; return lhs; }
       // prefix increment and decrement
-      inline constexpr friend auto operator++(Size& size) noexcept -> Size& { ++size.m_bytes; return size; }
-      inline constexpr friend auto operator--(Size& size) noexcept -> Size& { --size.m_bytes; return size; }
+      constexpr friend auto operator++(Size& size) noexcept -> Size& { ++size.m_bytes; return size; }
+      constexpr friend auto operator--(Size& size) noexcept -> Size& { --size.m_bytes; return size; }
       // postfix increment and decrement
-      inline constexpr friend auto operator++(Size& size, int) noexcept -> Size { ++size; return size; }
-      inline constexpr friend auto operator--(Size& size, int) noexcept -> Size { --size; return size; }
+      constexpr friend auto operator++(Size& size, int) noexcept -> Size { ++size; return size; }
+      constexpr friend auto operator--(Size& size, int) noexcept -> Size { --size; return size; }
       // shift bitwise
-      [[nodiscard]] inline constexpr friend auto operator<<(const Size& size, const int shift) noexcept -> Size { return size.m_bytes << shift; }  // assert((std::numeric_limits<BT>::max() >> shift) > size.m_bytes);
-      [[nodiscard]] inline constexpr friend auto operator>>(const Size& size, const int shift) noexcept -> Size { return size.m_bytes >> shift; }
+      [[nodiscard]] constexpr friend auto operator<<(const Size& size, const int shift) noexcept -> Size { return size.m_bytes << shift; }  // assert((std::numeric_limits<BT>::max() >> shift) > size.m_bytes);
+      [[nodiscard]] constexpr friend auto operator>>(const Size& size, const int shift) noexcept -> Size { return size.m_bytes >> shift; }
 
       /* Formatting */
       friend std::ostream& operator<<(std::ostream& os, const Size& size) {
@@ -123,27 +123,27 @@ namespace size {
 
 using ULL = unsigned long long;
 namespace size::size_literals {
-  inline constexpr auto operator""_B (ULL       bytes) noexcept -> Size<DEFAULT_BASE> { return {bytes}; }
+  constexpr auto operator""_B (ULL       bytes) noexcept -> Size<DEFAULT_BASE> { return {bytes}; }
   // Base-10 units
-  inline constexpr auto operator""_KB(ULL   kilobytes) noexcept -> Size<Base::Base10> { return {  kilobytes *  static_cast<BT>( Unit::KILOBYTE)}; }
-  inline constexpr auto operator""_MB(ULL   megabytes) noexcept -> Size<Base::Base10> { return {  megabytes *  static_cast<BT>( Unit::MEGABYTE)}; }
-  inline constexpr auto operator""_GB(ULL   gigabytes) noexcept -> Size<Base::Base10> { return {  gigabytes *  static_cast<BT>( Unit::GIGABYTE)}; }
-  inline constexpr auto operator""_TB(ULL   terabytes) noexcept -> Size<Base::Base10> { return {  terabytes *  static_cast<BT>( Unit::TERABYTE)}; }
-  inline constexpr auto operator""_PB(ULL   petabytes) noexcept -> Size<Base::Base10> { return {  petabytes *  static_cast<BT>( Unit::PETABYTE)}; }
-  inline constexpr auto operator""_EB(ULL    exabytes) noexcept -> Size<Base::Base10> { return {   exabytes *   static_cast<BT>( Unit::EXABYTE)}; }
-  inline constexpr auto operator""_ZB(ULL  zettabytes) noexcept -> Size<Base::Base10> { return { zettabytes * static_cast<BT>( Unit::ZETTABYTE)}; }
-  inline constexpr auto operator""_YB(ULL  yottabytes) noexcept -> Size<Base::Base10> { return { yottabytes * static_cast<BT>( Unit::YOTTABYTE)}; }
-  inline constexpr auto operator""_RB(ULL  ronnabytes) noexcept -> Size<Base::Base10> { return { ronnabytes * static_cast<BT>( Unit::RONNABYTE)}; }
-  inline constexpr auto operator""_QB(ULL quettabytes) noexcept -> Size<Base::Base10> { return {quettabytes * static_cast<BT>(Unit::QUETTABYTE)}; }
+  constexpr auto operator""_KB(ULL   kilobytes) noexcept -> Size<Base::Base10> { return {  kilobytes *  static_cast<BT>( Unit::KILOBYTE)}; }
+  constexpr auto operator""_MB(ULL   megabytes) noexcept -> Size<Base::Base10> { return {  megabytes *  static_cast<BT>( Unit::MEGABYTE)}; }
+  constexpr auto operator""_GB(ULL   gigabytes) noexcept -> Size<Base::Base10> { return {  gigabytes *  static_cast<BT>( Unit::GIGABYTE)}; }
+  constexpr auto operator""_TB(ULL   terabytes) noexcept -> Size<Base::Base10> { return {  terabytes *  static_cast<BT>( Unit::TERABYTE)}; }
+  constexpr auto operator""_PB(ULL   petabytes) noexcept -> Size<Base::Base10> { return {  petabytes *  static_cast<BT>( Unit::PETABYTE)}; }
+  constexpr auto operator""_EB(ULL    exabytes) noexcept -> Size<Base::Base10> { return {   exabytes *   static_cast<BT>( Unit::EXABYTE)}; }
+  constexpr auto operator""_ZB(ULL  zettabytes) noexcept -> Size<Base::Base10> { return { zettabytes * static_cast<BT>( Unit::ZETTABYTE)}; }
+  constexpr auto operator""_YB(ULL  yottabytes) noexcept -> Size<Base::Base10> { return { yottabytes * static_cast<BT>( Unit::YOTTABYTE)}; }
+  constexpr auto operator""_RB(ULL  ronnabytes) noexcept -> Size<Base::Base10> { return { ronnabytes * static_cast<BT>( Unit::RONNABYTE)}; }
+  constexpr auto operator""_QB(ULL quettabytes) noexcept -> Size<Base::Base10> { return {quettabytes * static_cast<BT>(Unit::QUETTABYTE)}; }
   // Base-2 units
-  inline constexpr auto operator""_KiB(ULL  kibibytes) noexcept -> Size<Base::Base2> { return { kibibytes * static_cast<BT>( Unit::KIBIBYTE)}; }
-  inline constexpr auto operator""_MiB(ULL  mebibytes) noexcept -> Size<Base::Base2> { return { mebibytes * static_cast<BT>( Unit::MEBIBYTE)}; }
-  inline constexpr auto operator""_GiB(ULL  gibibytes) noexcept -> Size<Base::Base2> { return { gibibytes * static_cast<BT>( Unit::GIBIBYTE)}; }
-  inline constexpr auto operator""_TiB(ULL  tebibytes) noexcept -> Size<Base::Base2> { return { tebibytes * static_cast<BT>( Unit::TEBIBYTE)}; }
-  inline constexpr auto operator""_PiB(ULL  pebibytes) noexcept -> Size<Base::Base2> { return { pebibytes * static_cast<BT>( Unit::PEBIBYTE)}; }
-  inline constexpr auto operator""_EiB(ULL  exbibytes) noexcept -> Size<Base::Base2> { return { exbibytes * static_cast<BT>( Unit::EXBIBYTE)}; }
-  inline constexpr auto operator""_ZiB(ULL  zebibytes) noexcept -> Size<Base::Base2> { return { zebibytes * static_cast<BT>( Unit::ZEBIBYTE)}; }
-  inline constexpr auto operator""_YiB(ULL  yobibytes) noexcept -> Size<Base::Base2> { return { yobibytes * static_cast<BT>( Unit::YOBIBYTE)}; }
-  inline constexpr auto operator""_RiB(ULL  robibytes) noexcept -> Size<Base::Base2> { return { robibytes * static_cast<BT>( Unit::ROBIBYTE)}; }
-  inline constexpr auto operator""_QiB(ULL quebibytes) noexcept -> Size<Base::Base2> { return {quebibytes * static_cast<BT>(Unit::QUEBIBYTE)}; }
+  constexpr auto operator""_KiB(ULL  kibibytes) noexcept -> Size<Base::Base2> { return { kibibytes * static_cast<BT>( Unit::KIBIBYTE)}; }
+  constexpr auto operator""_MiB(ULL  mebibytes) noexcept -> Size<Base::Base2> { return { mebibytes * static_cast<BT>( Unit::MEBIBYTE)}; }
+  constexpr auto operator""_GiB(ULL  gibibytes) noexcept -> Size<Base::Base2> { return { gibibytes * static_cast<BT>( Unit::GIBIBYTE)}; }
+  constexpr auto operator""_TiB(ULL  tebibytes) noexcept -> Size<Base::Base2> { return { tebibytes * static_cast<BT>( Unit::TEBIBYTE)}; }
+  constexpr auto operator""_PiB(ULL  pebibytes) noexcept -> Size<Base::Base2> { return { pebibytes * static_cast<BT>( Unit::PEBIBYTE)}; }
+  constexpr auto operator""_EiB(ULL  exbibytes) noexcept -> Size<Base::Base2> { return { exbibytes * static_cast<BT>( Unit::EXBIBYTE)}; }
+  constexpr auto operator""_ZiB(ULL  zebibytes) noexcept -> Size<Base::Base2> { return { zebibytes * static_cast<BT>( Unit::ZEBIBYTE)}; }
+  constexpr auto operator""_YiB(ULL  yobibytes) noexcept -> Size<Base::Base2> { return { yobibytes * static_cast<BT>( Unit::YOBIBYTE)}; }
+  constexpr auto operator""_RiB(ULL  robibytes) noexcept -> Size<Base::Base2> { return { robibytes * static_cast<BT>( Unit::ROBIBYTE)}; }
+  constexpr auto operator""_QiB(ULL quebibytes) noexcept -> Size<Base::Base2> { return {quebibytes * static_cast<BT>(Unit::QUEBIBYTE)}; }
 }; // namespace size::size_literals
