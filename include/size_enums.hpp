@@ -116,7 +116,7 @@ namespace size {
     {Unit::QUETTABYTE, { "QB",  "qb", "Quettabyte", "quettabyte"}}
   }};
 
-  constexpr const Unit_Names& find_unit_pair(const BT bytes, const int base) {
+  [[nodiscard]] constexpr const Unit_Names& find_unit_pair(const BT bytes, const int base) {
     if (bytes < static_cast<BT>(units.at(1 + base).first)) return units.at(0);
 
     for (auto unit = 3 + base; unit < units.size(); unit += 2)
@@ -125,7 +125,7 @@ namespace size {
     return units.at(units.size() - 2 + base);
   }
 
-  constexpr const Unit_Names& find_unit_pair(const Unit unit) {
+  [[nodiscard]] constexpr const Unit_Names& find_unit_pair(const Unit unit) {
     return *std::find_if(units.begin(), units.end(),
       [unit](const Unit_Names& un) { return un.first == unit; });
   }

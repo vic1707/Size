@@ -56,7 +56,7 @@ template <size::Base unitBase> struct fmt::formatter<size::Size<unitBase>> {
   // postitionnal separator
   std::optional<std::vector<std::string>> positionnal_separators;
 
-  constexpr auto parse_positionnal_args(fmt::format_parse_context::iterator it) const -> Positionnal {
+  [[nodiscard]] constexpr auto parse_positionnal_args(fmt::format_parse_context::iterator it) const -> Positionnal {
     switch (*it) {
       case 'V':
         return DEFAULT_POSITIONNAL_VALUE;
@@ -81,7 +81,7 @@ template <size::Base unitBase> struct fmt::formatter<size::Size<unitBase>> {
   }
 
   template <typename ParseContext>
-  constexpr auto parse(ParseContext& ctx) -> decltype(ctx.begin()) {
+  [[nodiscard]] constexpr auto parse(ParseContext& ctx) -> decltype(ctx.begin()) {
     auto it = ctx.begin(), end = ctx.end();
     if (it == end || *it == '}') return it;
 
@@ -143,7 +143,7 @@ template <size::Base unitBase> struct fmt::formatter<size::Size<unitBase>> {
   }
 
   template <typename FormatContext>
-  auto format(const size::Size<unitBase>& s, FormatContext& ctx) const -> decltype(ctx.out()) {
+  [[nodiscard]] auto format(const size::Size<unitBase>& s, FormatContext& ctx) const -> decltype(ctx.out()) {
     std::string res;
     const auto [unit_base, unit_names] = unit.has_value()
                                        ? size::find_unit_pair(unit.value())
