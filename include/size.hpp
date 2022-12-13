@@ -43,6 +43,7 @@ namespace size {
       /* Base conversion */
       [[nodiscard]] constexpr auto to_base2() const noexcept -> Size<Base::Base2> requires (base == Base::Base10) { return Size<Base::Base2>(m_bytes); }
       [[nodiscard]] constexpr auto to_base10() const noexcept -> Size<Base::Base10> requires (base == Base::Base2) { return Size<Base::Base10>(m_bytes); }
+      template<Base b> [[nodiscard]] constexpr auto to_base() const noexcept -> Size<b> { return Size<b>(m_bytes); }
 
       /* Constructors */
       [[nodiscard]] constexpr Size() noexcept = default;

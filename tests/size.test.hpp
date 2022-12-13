@@ -7,6 +7,7 @@
 #include "gtest/gtest.h"
 /* SIZE */
 #include "size.hpp"
+#include "size_enums.hpp"
 using namespace size::size_literals;
 
 /* Tests */
@@ -496,7 +497,11 @@ GTEST_TEST(operators_ostream_out, ostream_base2) {
   EXPECT_EQ(get_stream_output(10_RiB), "10 RiB") << "[Base2] - Should display 10_RiB as '10 RiB'";
   EXPECT_EQ(get_stream_output(11_QiB), "11 QiB") << "[Base2] - Should display 11_QiB as '11 QiB'";
   EXPECT_EQ(get_stream_output((1_GB).to_base2()), "953.674 MiB") << "[Base2] - Should display 1_GB as '953.674 MiB'";
+  EXPECT_EQ(get_stream_output((1_GB).to_base<size::Base::Base2>()), "953.674 MiB") << "[Base2] - Should display 1_GB as '953.674 MiB'";
+  EXPECT_EQ(get_stream_output((1_GB).to_base<size::Base::Base10>()), "1 GB") << "[Base2] - Should display 1_GB as '1 GB'";
   EXPECT_EQ(get_stream_output((2_GB).to_base2()), "1.86265 GiB") << "[Base2] - Should display 2_GB as '1.86265 GiB'";
+  EXPECT_EQ(get_stream_output((2_GB).to_base<size::Base::Base2>()), "1.86265 GiB") << "[Base2] - Should display 2_GB as '1.86265 GiB'";
+  EXPECT_EQ(get_stream_output((2_GB).to_base<size::Base::Base10>()), "2 GB") << "[Base2] - Should display 2_GB as '2 GB'";
   EXPECT_EQ(get_stream_output(512000_B), "500 KiB") << "[Base2] - Should display 512000_B as '500 KiB'";
 };
 
@@ -513,8 +518,14 @@ GTEST_TEST(operators_ostream_out, ostream_base10) {
   EXPECT_EQ(get_stream_output(10_RB), "10 RB") << "[Base10] - Should display 10_RB as '10 RB'";
   EXPECT_EQ(get_stream_output(11_QB), "11 QB") << "[Base10] - Should display 11_QB as '11 QB'";
   EXPECT_EQ(get_stream_output((1_GiB).to_base10()), "1.07374 GB") << "[Base10] - Should display 1_GiB as '1.07374 GB'";
+  EXPECT_EQ(get_stream_output((1_GiB).to_base<size::Base::Base2>()), "1 GiB") << "[Base10] - Should display 1_GiB as '1 GiB'";
+  EXPECT_EQ(get_stream_output((1_GiB).to_base<size::Base::Base10>()), "1.07374 GB") << "[Base10] - Should display 1_GiB as '1.07374 GB'";
   EXPECT_EQ(get_stream_output((1000_GiB).to_base10()), "1.07374 TB") << "[Base10] - Should display 1000_GiB as '1.07374 TB'";
+  EXPECT_EQ(get_stream_output((1000_GiB).to_base<size::Base::Base2>()), "1000 GiB") << "[Base10] - Should display 1000_GiB as '1000 GiB'";
+  EXPECT_EQ(get_stream_output((1000_GiB).to_base<size::Base::Base10>()), "1.07374 TB") << "[Base10] - Should display 1000_GiB as '1.07374 TB'";
   EXPECT_EQ(get_stream_output((1000_B).to_base10()), "1 KB") << "[Base10] - Should display 1000_B as '1 KB'";
+  EXPECT_EQ(get_stream_output((1000_B).to_base<size::Base::Base2>()), "1000 B") << "[Base10] - Should display 1000_B as '1000 B'";
+  EXPECT_EQ(get_stream_output((1000_B).to_base<size::Base::Base10>()), "1 KB") << "[Base10] - Should display 1000_B as '1 KB'";
 };
 
 #pragma endregion
