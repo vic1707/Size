@@ -50,8 +50,6 @@ GTEST_TEST(FMT, specify_positions) {
   EXPECT_EQ(fmt::format("{:#%V}", 1_KB), "1") << "Should display '{:#%V}' of 1_KB as '1'";
   EXPECT_EQ(fmt::format("{:#%U %V}", 1_KB), "KB 1") << "Should display '{:#%U %V}' of 1_KB as 'KB 1'";
   EXPECT_EQ(fmt::format("{:#%V %U}", 1_KB), "1 KB") << "Should display '{:#%V %U}' of 1_KB as '1 KB'";
-  EXPECT_EQ(fmt::format("{:#%V %U %V}", 1_KB), "1 KB 1") << "Should display '{:#%V %U %V}' of 1_KB as '1 KB 1'";
-  EXPECT_EQ(fmt::format("{:#%U %V %U}", 1_KB), "KB 1 KB") << "Should display '{:#%U %V %U}' of 1_KB as 'KB 1 KB'";
 }
 
 GTEST_TEST(FMT, specify_in_between_text) {
