@@ -58,7 +58,7 @@ namespace size {
 
       /* Operators Overloading */
       // comparison with other bases
-      template<Base otherBase> [[nodiscard]] constexpr auto operator<=>(const Size<otherBase>& rhs) const noexcept -> std::strong_ordering { return m_bytes <=> rhs.bytes(); }
+      template<Base otherBase> [[nodiscard]] constexpr auto operator<=>(const Size<otherBase>& rhs) const noexcept -> std::partial_ordering { return m_bytes <=> rhs.bytes(); }
       template<Base otherBase> [[nodiscard]] constexpr auto operator==(const Size<otherBase>& rhs) const noexcept -> bool { return m_bytes == rhs.bytes(); }
       // comparison with integral types
       [[nodiscard]] constexpr auto operator<=>(const std::integral auto& rhs) const noexcept -> std::strong_ordering { return m_bytes <=> static_cast<BT>(rhs); }
