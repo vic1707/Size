@@ -17,28 +17,28 @@ namespace size {
       [[nodiscard]] constexpr auto nearest_unit(Base b) const noexcept -> const Unit_Names& { return find_unit_pair(m_bytes, static_cast<int>(b)); }
 
       /* Methods */
-      [[nodiscard]] constexpr auto       bytes() const noexcept -> BT { return m_bytes; }
-      [[nodiscard]] constexpr auto   kilobytes() const noexcept -> LD { return static_cast<LD>(m_bytes) / static_cast<LD>(  Unit::KILOBYTE); }
-      [[nodiscard]] constexpr auto   megabytes() const noexcept -> LD { return static_cast<LD>(m_bytes) / static_cast<LD>(  Unit::MEGABYTE); }
-      [[nodiscard]] constexpr auto   gigabytes() const noexcept -> LD { return static_cast<LD>(m_bytes) / static_cast<LD>(  Unit::GIGABYTE); }
-      [[nodiscard]] constexpr auto   terabytes() const noexcept -> LD { return static_cast<LD>(m_bytes) / static_cast<LD>(  Unit::TERABYTE); }
-      [[nodiscard]] constexpr auto   petabytes() const noexcept -> LD { return static_cast<LD>(m_bytes) / static_cast<LD>(  Unit::PETABYTE); }
-      [[nodiscard]] constexpr auto    exabytes() const noexcept -> LD { return static_cast<LD>(m_bytes) / static_cast<LD>(   Unit::EXABYTE); }
-      [[nodiscard]] constexpr auto  zettabytes() const noexcept -> LD { return static_cast<LD>(m_bytes) / static_cast<LD>( Unit::ZETTABYTE); }
-      [[nodiscard]] constexpr auto  yottabytes() const noexcept -> LD { return static_cast<LD>(m_bytes) / static_cast<LD>( Unit::YOTTABYTE); }
-      [[nodiscard]] constexpr auto  ronnabytes() const noexcept -> LD { return static_cast<LD>(m_bytes) / static_cast<LD>( Unit::RONNABYTE); }
-      [[nodiscard]] constexpr auto quettabytes() const noexcept -> LD { return static_cast<LD>(m_bytes) / static_cast<LD>(Unit::QUETTABYTE); }
+      [[nodiscard]] constexpr auto       bytes(Unit unit = Unit::BYTE) const noexcept -> LD { return static_cast<LD>(m_bytes) / static_cast<LD>(unit); }
+      [[nodiscard]] constexpr auto   kilobytes() const noexcept -> LD { return bytes(  Unit::KILOBYTE); }
+      [[nodiscard]] constexpr auto   megabytes() const noexcept -> LD { return bytes(  Unit::MEGABYTE); }
+      [[nodiscard]] constexpr auto   gigabytes() const noexcept -> LD { return bytes(  Unit::GIGABYTE); }
+      [[nodiscard]] constexpr auto   terabytes() const noexcept -> LD { return bytes(  Unit::TERABYTE); }
+      [[nodiscard]] constexpr auto   petabytes() const noexcept -> LD { return bytes(  Unit::PETABYTE); }
+      [[nodiscard]] constexpr auto    exabytes() const noexcept -> LD { return bytes(   Unit::EXABYTE); }
+      [[nodiscard]] constexpr auto  zettabytes() const noexcept -> LD { return bytes( Unit::ZETTABYTE); }
+      [[nodiscard]] constexpr auto  yottabytes() const noexcept -> LD { return bytes( Unit::YOTTABYTE); }
+      [[nodiscard]] constexpr auto  ronnabytes() const noexcept -> LD { return bytes( Unit::RONNABYTE); }
+      [[nodiscard]] constexpr auto quettabytes() const noexcept -> LD { return bytes(Unit::QUETTABYTE); }
 
-      [[nodiscard]] constexpr auto  kibibytes() const noexcept -> LD { return static_cast<LD>(m_bytes) / static_cast<LD>( Unit::KIBIBYTE); }
-      [[nodiscard]] constexpr auto  mebibytes() const noexcept -> LD { return static_cast<LD>(m_bytes) / static_cast<LD>( Unit::MEBIBYTE); }
-      [[nodiscard]] constexpr auto  gibibytes() const noexcept -> LD { return static_cast<LD>(m_bytes) / static_cast<LD>( Unit::GIBIBYTE); }
-      [[nodiscard]] constexpr auto  tebibytes() const noexcept -> LD { return static_cast<LD>(m_bytes) / static_cast<LD>( Unit::TEBIBYTE); }
-      [[nodiscard]] constexpr auto  pebibytes() const noexcept -> LD { return static_cast<LD>(m_bytes) / static_cast<LD>( Unit::PEBIBYTE); }
-      [[nodiscard]] constexpr auto  exbibytes() const noexcept -> LD { return static_cast<LD>(m_bytes) / static_cast<LD>( Unit::EXBIBYTE); }
-      [[nodiscard]] constexpr auto  zebibytes() const noexcept -> LD { return static_cast<LD>(m_bytes) / static_cast<LD>( Unit::ZEBIBYTE); }
-      [[nodiscard]] constexpr auto  yobibytes() const noexcept -> LD { return static_cast<LD>(m_bytes) / static_cast<LD>( Unit::YOBIBYTE); }
-      [[nodiscard]] constexpr auto  robibytes() const noexcept -> LD { return static_cast<LD>(m_bytes) / static_cast<LD>( Unit::ROBIBYTE); }
-      [[nodiscard]] constexpr auto quebibytes() const noexcept -> LD { return static_cast<LD>(m_bytes) / static_cast<LD>(Unit::QUEBIBYTE); }
+      [[nodiscard]] constexpr auto   kibibytes() const noexcept -> LD { return bytes(  Unit::KIBIBYTE); }
+      [[nodiscard]] constexpr auto   mebibytes() const noexcept -> LD { return bytes(  Unit::MEBIBYTE); }
+      [[nodiscard]] constexpr auto   gibibytes() const noexcept -> LD { return bytes(  Unit::GIBIBYTE); }
+      [[nodiscard]] constexpr auto   tebibytes() const noexcept -> LD { return bytes(  Unit::TEBIBYTE); }
+      [[nodiscard]] constexpr auto   pebibytes() const noexcept -> LD { return bytes(  Unit::PEBIBYTE); }
+      [[nodiscard]] constexpr auto   exbibytes() const noexcept -> LD { return bytes(  Unit::EXBIBYTE); }
+      [[nodiscard]] constexpr auto   zebibytes() const noexcept -> LD { return bytes(  Unit::ZEBIBYTE); }
+      [[nodiscard]] constexpr auto   yobibytes() const noexcept -> LD { return bytes(  Unit::YOBIBYTE); }
+      [[nodiscard]] constexpr auto   robibytes() const noexcept -> LD { return bytes(  Unit::ROBIBYTE); }
+      [[nodiscard]] constexpr auto  quebibytes() const noexcept -> LD { return bytes( Unit::QUEBIBYTE); }
 
       /* Base conversion */
       [[nodiscard]] constexpr auto to_base2() const noexcept -> Size<Base::Base2> requires (base == Base::Base10) { return Size<Base::Base2>(m_bytes); }
